@@ -1,0 +1,20 @@
+.main{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputStatus{
+    margin: 150px;
+    width: 450px;
+}
+
+.infoBlock{
+    margin: 25px;
+    border: 2px solid #1976d2;;
+}
+
+.infoText{
+    margin: 10px;
+}

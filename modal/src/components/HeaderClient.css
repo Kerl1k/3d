@@ -1,0 +1,19 @@
+.header {
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    margin: 25px;
+}
+
+.buttonHeader {
+    margin: 25px;
+}
+
+
+.header_button {
+    border-radius: 15px;
+}
+
+.active_header_button {
+    background: rgb(235, 232, 232);
+}
