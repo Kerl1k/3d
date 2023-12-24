@@ -1,21 +1,35 @@
-const { Project } = require("../models/models");
+const { Project, File } = require("../models/models");
 const ApiError = require("../error/ApiError");
 const uuid = require("uuid");
 const path = require("path");
+const fs = require("node:fs/promises");
 
 class ProjectController {
   async create(req, res) {
-    const { name, subdivision, email, phone, status } = req.body;
+    const { id, name, subdivision, email, phone, status } = req.body;
     const { file } = req.files;
-    let fileName = uuid.v4();
-    file.mv(path.resolve(__dirname, "..", "static", fileName));
-    const project = await Project.create({
+    const type = file.name.split(".").pop();
+    let fileName = file.name;
+    await fs.mkdir("static/" + id, () => {});
+    file.mv(path.resolve(__dirname, "..", "static/", id, fileName));
+    // const files = File.create({
+    //   id: Date.now(),
+    //   name: fileName,
+    //   type,
+    //   accessLink: "",
+    //   size: file.size,
+    //   path: id,
+    //   date: Date.now(),
+    // });
+
+    const project = Project.create({
+      id,
       name,
       subdivision,
       email,
       phone,
       status,
-      file: fileName,
+      fileName,
     });
     return res.json(project);
   }
