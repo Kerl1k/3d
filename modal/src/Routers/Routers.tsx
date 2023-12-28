@@ -5,6 +5,9 @@ import Manager from "../Pages/Manager";
 import Client from "../Pages/Client";
 import SignIn from "../Pages/SignIn";
 import Status from "../Pages/Status";
+import Folder from "../Pages/Folder";
+import ListManager from "../Pages/ListManager";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "status",
         element: <Status />,
+      },
+      {
+        path: "folder",
+        element: <Folder />,
+      },
+      {
+        path: "listmanager",
+        element: <ListManager />,
       },
     ],
   },

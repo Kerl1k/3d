@@ -6,10 +6,9 @@ import TextField from "@mui/material/TextField/TextField";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { NavLink } from "react-router-dom";
 import HeaderClient from "../components/HeaderClient";
-import { createPortal } from "react-dom";
-import Manager from "./Manager";
+import MyModal from "../components/modal/MyModal";
+import folder from "../PNG/folder.png";
 
 interface Form {
   id: string;
@@ -18,11 +17,14 @@ interface Form {
   email: string;
   phone: string;
   status: string;
+  file: object[];
 }
 
 const Client = () => {
-  const [file, setFile] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [file, setFile] = useState<null | File[]>(null);
   const [addFile] = fileApi.useFetchCreateFileMutation();
+  const [info, setInfo] = useState<Form | null>(null);
   const { register, handleSubmit } = useForm<Form>({
     defaultValues: {
       id: String(Date.now()),
@@ -35,7 +37,8 @@ const Client = () => {
   });
   const selectFile = (e: any) => {
     if (e.target !== null) {
-      setFile(e.target.files[0]);
+      setFile(e.target.files);
+      console.log(file);
     }
   };
   const VisuallyHiddenInput = styled("input")({
@@ -51,15 +54,19 @@ const Client = () => {
   });
 
   const submit: SubmitHandler<Form> = (data) => {
+    setInfo(data);
+    setModal(true);
     if (file !== null) {
       const formData = new FormData();
-      formData.append("id", data.id);
+      formData.append("id", String(Date.now()));
       formData.append("name", data.name);
       formData.append("subdivision", data.subdivision);
       formData.append("email", data.email);
       formData.append("phone", data.phone);
       formData.append("status", data.status);
-      formData.append("file", file);
+      for (const currentFile of file) {
+        formData.append(currentFile.name, currentFile);
+      }
       addFile(formData);
     }
   };
@@ -112,12 +119,27 @@ const Client = () => {
             startIcon={<CloudUploadIcon />}
           >
             Добавить файл
-            <VisuallyHiddenInput type="file" />
+            <VisuallyHiddenInput multiple type="file" />
           </Button>
+          <div className="fileList">
+            {file === null ? <div></div> : <div>Файл добавлен:</div>}
+          </div>
         </div>
         <button className="buttonForm">Отправить</button>
       </form>
-      {createPortal(<Manager />, document.body)}
+      <MyModal visible={modal} setVisible={setModal}>
+        {info !== null ? (
+          <div>
+            <div>{info.id}</div>
+            <div>{info.name}</div>
+            <div>{info.phone}</div>
+            <div>{info.subdivision}</div>
+            <div>{info.status}</div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </MyModal>
     </div>
   );
 };

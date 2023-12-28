@@ -7,6 +7,11 @@ export const userApi = createApi({
   }),
   tagTypes: ["User"],
   endpoints: (build) => ({
+    fetchAllRegistration: build.query<any, any>({
+      query: () => ({
+        url: "/",
+      }),
+    }),
     fetchRegistration: build.mutation<any, any>({
       query: (user) => ({
         url: "registration",

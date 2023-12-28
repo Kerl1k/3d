@@ -1,11 +1,11 @@
 const Router = require("express");
 const router = new Router();
-const projectContoller = require("../contollers/projectContoller");
+const ProjectController = require("../controllers/projectController");
 
-router.post("/", projectContoller.create);
-router.get("/:id", projectContoller.getOne);
-router.get("/", projectContoller.getAll);
-router.post("/:id", projectContoller.change);
-router.delete("/:id", projectContoller.delete);
+router.post("/", ProjectController.create);
+router.get("/:id", ProjectController.getOne);
+router.get("/", ProjectController.getAll);
+router.post("/:id", ProjectController.change);
+router.delete("/:id", ProjectController.delete);
 
 module.exports = router;

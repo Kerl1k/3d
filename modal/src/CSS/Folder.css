@@ -1,0 +1,23 @@
+.main_block{
+    display: flex;
+    justify-content: center;
+}
+
+.box-folder{
+    display: flex;
+}
+
+.folder{
+    margin: 15px;
+    width: 150px;
+    height: 150px;
+}
+
+.png{
+    width: 150px;
+    height: 150px;
+}
+
+.text{
+    text-align: center;
+}

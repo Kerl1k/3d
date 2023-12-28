@@ -2,12 +2,33 @@ import React from "react";
 import { fileApi } from "../services/fileService";
 import { IFile } from "../ts/IFile";
 import "../CSS/Manager.css";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button/Button";
 
 const Manager = () => {
   const { data: file } = fileApi.useFetchGetAllFileQuery("");
   console.log(file);
   return (
     <div className="mainBlock">
+      <div className="button">
+        <Link to={"/manager"}>
+          <Button variant="outlined" size="large">
+            manager
+          </Button>
+        </Link>
+      </div>
+      <div className="button">
+        <Link to={"/folder"}>
+          <Button variant="outlined" size="large">
+            folder
+          </Button>
+        </Link>
+        <Link to={"/listmanager"}>
+          <Button variant="outlined" size="large">
+            add manager
+          </Button>
+        </Link>
+      </div>
       <div className="headerInfo">
         <div className="textInfo">ФИО</div>
         <div className="textInfo">Подразделение</div>
@@ -22,7 +43,16 @@ const Manager = () => {
             <div className="textInfo">{f.subdivision}</div>
             <div className="textInfo">{f.email}</div>
             <div className="textInfo">{f.phone}</div>
-            <div className="textInfo">{f.status}</div>
+            <select
+              id="status"
+              name="status"
+              // onChange={(e: any) => ChangeStatus(reserv, e)}
+              defaultValue={f.status}
+            >
+              <option value="Working">Ожидает</option>
+              <option value="Awaiting confirmation">Отправлен в работу</option>
+              <option value="Awaiting payment">Завершен</option>
+            </select>
             <a href={"../../../back/static/" + f.file + ".png"}>Текст </a>
           </div>
         ))
